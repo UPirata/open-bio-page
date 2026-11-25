@@ -1,26 +1,26 @@
 {
-  "adminTitle": "Open Bio Page: Admin",
-  "brand": "Open Bio Page",
-  "copyrightOwner": "Open Bio Page",
-  "domain": "openbio.page",
-  "githubRepo": "open-bio-page/open-bio-page",
+  "adminTitle": "Davide Savo: Admin",
+  "brand": "Davide Savo",
+  "copyrightOwner": "Davide Savo",
+  "domain": "davide.pages.dev",
+  "githubRepo": "UPirata/open-bio-page",
   "home": {
-    "author": "Open Bio Page",
-    "collectionName": "Open Bio Page directory",
-    "description": "White-label, self-hosted link-in-bio. GitHub Fork, customize content/site.json, add profiles, publish.",
-    "ogImageAlt": "Open Bio Page",
-    "title": "Open Bio Page: Link-in-bio platform"
+    "author": "Davide Savo",
+    "collectionName": "Davide Savo",
+    "description": "Links for Davide Savo, Agentic AI Engineer based in Genoa, Italy.",
+    "ogImageAlt": "Davide Savo",
+    "title": "Davide Savo"
   },
   "licensePath": "LICENSE.md",
   "og": {
-    "homeEyebrow": "OPENBIO.PAGE",
-    "homeTagline": "Your links. Your brand. Your host. Your stats. Free.",
-    "homeTitle": "Open Bio Page"
+    "homeEyebrow": "DAVIDE.PAGES.DEV",
+    "homeTagline": "Agentic AI Engineer. Based in Genoa, Italy.",
+    "homeTitle": "Davide Savo"
   },
-  "origin": "https://openbio.page",
-  "privacyContactEmail": "hello@openbio.page",
+  "origin": "https://davide.pages.dev",
+  "privacyContactEmail": "",
   "seo": {
-    "llmsBlurb": "White-label link-in-bio platform. One page per person, admin-scoped edits, static publish.",
-    "llmsTitle": "Open Bio Page"
+    "llmsBlurb": "Link page for Davide Savo, Agentic AI Engineer based in Genoa, Italy.",
+    "llmsTitle": "Davide Savo"
   }
 }

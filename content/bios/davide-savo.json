@@ -1,0 +1,61 @@
+{
+  "slug": "davide-savo",
+  "name": "Davide Savo",
+  "avatar": "/media/davide-savo.webp",
+  "layout": { "columns": 2 },
+  "theme": {
+    "primary": "#14151B",
+    "secondary": "#2F4BE0",
+    "glyphColor": "#3A5BFF",
+    "font": "geist-sans",
+    "cardRadius": 14,
+    "avatarRadius": 9999,
+    "avatarBorderWidth": 1,
+    "avatarBorderColor": "#3A5BFF"
+  },
+  "content": {
+    "en": {
+      "eyebrow": "Agentic AI Engineer",
+      "tagline": "Based in Genoa, Italy."
+    },
+    "it": {
+      "eyebrow": "Agentic AI Engineer",
+      "tagline": "Con sede a Genova, Italia."
+    }
+  },
+  "links": [
+    {
+      "id": "linkedin",
+      "label": { "en": "LinkedIn", "it": "LinkedIn" },
+      "href": "https://www.linkedin.com/in/david-one",
+      "icon": "mdi:linkedin",
+      "primary": true,
+      "external": true
+    },
+    {
+      "id": "github",
+      "label": { "en": "GitHub", "it": "GitHub" },
+      "href": "https://github.com/UPirata",
+      "icon": "mdi:github",
+      "external": true
+    }
+  ],
+  "socials": [
+    {
+      "id": "linkedin",
+      "label": { "en": "LinkedIn", "it": "LinkedIn" },
+      "href": "https://www.linkedin.com/in/david-one",
+      "icon": "mdi:linkedin",
+      "color": "#0A66C2",
+      "external": true
+    },
+    {
+      "id": "github",
+      "label": { "en": "GitHub", "it": "GitHub" },
+      "href": "https://github.com/UPirata",
+      "icon": "mdi:github",
+      "color": "#181717",
+      "external": true
+    }
+  ]
+}

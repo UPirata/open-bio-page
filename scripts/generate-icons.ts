@@ -34,7 +34,7 @@ for (const biosDir of biosDirs) {
 const map: Record<string, string> = {}
 for (const name of [...names].sort()) {
   try {
-    const res = await fetch(`https://api.iconify.design/${name}.svg`)
+    const res = await fetch(`https://api.iconify.design/${name.replace(':', '/')}.svg`)
     if (!res.ok) {
       console.warn(`[icons] skip ${name}: HTTP ${res.status}`)
       continue
