@@ -2,7 +2,7 @@
   "adminTitle": "Davide Savo: Admin",
   "brand": "Davide Savo",
   "copyrightOwner": "Davide Savo",
-  "domain": "davide.pages.dev",
+  "domain": "davidone.pages.dev",
   "githubRepo": "UPirata/open-bio-page",
   "home": {
     "author": "Davide Savo",
@@ -13,11 +13,11 @@
   },
   "licensePath": "LICENSE.md",
   "og": {
-    "homeEyebrow": "DAVIDE.PAGES.DEV",
+    "homeEyebrow": "DAVIDONE.PAGES.DEV",
     "homeTagline": "Agentic AI Engineer. Based in Genoa, Italy.",
     "homeTitle": "Davide Savo"
   },
-  "origin": "https://davide.pages.dev",
+  "origin": "https://davidone.pages.dev",
   "privacyContactEmail": "",
   "seo": {
     "llmsBlurb": "Link page for Davide Savo, Agentic AI Engineer based in Genoa, Italy.",
