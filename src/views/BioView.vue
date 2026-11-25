@@ -14,11 +14,12 @@ import { DEFAULT_FAVICON, FAVICON_RADIUS, letterGlyphDataUri } from '@/lib/lette
 import { loadFont } from '@/lib/load-font'
 import { ICONS } from '@/generated/icons'
 import { useI18n } from '@/i18n'
+import { ogLocaleOf } from '@/i18n/locales'
 
-const { t, locale } = useI18n()
+const { ui, locale, dir } = useI18n()
 const { slug, bio, notFound } = useCurrentBio()
 
-const content = computed(() => bio.value?.content[locale.value])
+const content = computed(() => bio.value?.content[locale.value] ?? bio.value?.content.en)
 
 const iconUrl = (icon: string | undefined) =>
   icon ? (ICONS[icon] ?? `https://api.iconify.design/${icon}.svg`) : ''
@@ -52,8 +53,8 @@ useSeoMeta({
   ogImageHeight: '630',
   ogImageAlt: () => imageAlt.value,
   ogImageType: 'image/png',
-  ogLocale: () => (locale.value === 'it' ? 'it_IT' : 'en_US'),
-  ogLocaleAlternate: () => (locale.value === 'it' ? 'en_US' : 'it_IT'),
+  ogLocale: () => ogLocaleOf(locale.value),
+  ogLocaleAlternate: () => (locale.value === 'en' ? 'it_IT' : 'en_US'),
   twitterCard: 'summary_large_image',
   twitterTitle: () => seoTitle.value,
   twitterDescription: () => seoDescription.value,
@@ -100,7 +101,7 @@ const jsonLd = computed(() => {
 })
 
 useHead({
-  htmlAttrs: { lang: () => locale.value },
+  htmlAttrs: { lang: () => locale.value, dir: () => dir.value },
   link: [
     { rel: 'canonical', href: () => canonical.value },
     {
@@ -206,9 +207,9 @@ main.social-page.bio-theme.relative.flex.min-h-dvh.flex-col.bg-site-background(
   :style="bioThemeStyle(bio.theme)"
   class="pt-[max(2.75rem,env(safe-area-inset-top))] pb-[max(2rem,env(safe-area-inset-bottom))]"
 )
-  button.share-btn.fixed.right-5.z-20.flex.size-11.items-center.justify-center.rounded-full.text-site-heading.transition-transform(
+  button.share-btn.fixed.end-5.z-20.flex.size-11.items-center.justify-center.rounded-full.text-site-heading.transition-transform(
     type="button"
-    :aria-label="t('social.shareTitle')"
+    :aria-label="ui('shareTitle')"
     class="top-[max(1rem,env(safe-area-inset-top))] active:scale-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-site-secondary"
     @click="openShare"
   )
@@ -228,15 +229,15 @@ main.social-page.bio-theme.relative.flex.min-h-dvh.flex-col.bg-site-background(
       .share-sheet.relative.w-full.max-w-sm.rounded-3xl.border.border-site-border.bg-site-surface.p-5.shadow-2xl(
         role="dialog"
         aria-modal="true"
-        :aria-label="t('social.shareTitle')"
+        :aria-label="ui('shareTitle')"
       )
         .flex.items-start.justify-between.gap-4
           .flex.flex-col.gap-1
-            h2.text-base.font-semibold.text-site-heading {{ t('social.shareTitle') }}
-            p.text-xs.text-site-muted {{ t('social.shareHint') }}
+            h2.text-base.font-semibold.text-site-heading {{ ui('shareTitle') }}
+            p.text-xs.text-site-muted {{ ui('shareHint') }}
           button.shrink-0.text-lg.leading-none.text-site-muted.transition-colors(
             type="button"
-            :aria-label="t('social.shareClose')"
+            :aria-label="ui('shareClose')"
             class="hover:text-site-heading"
             @click="closeShare"
           ) ✕
@@ -254,13 +255,13 @@ main.social-page.bio-theme.relative.flex.min-h-dvh.flex-col.bg-site-background(
             type="button"
             class="active:scale-[0.99] hover:bg-site-secondary hover:text-white"
             @click="copyLink"
-          ) {{ copied ? t('social.shareCopied') : t('social.shareCopy') }}
+          ) {{ copied ? ui('shareCopied') : ui('shareCopy') }}
           button.rounded-xl.border.border-site-border.px-4.py-3.text-sm.font-medium.text-site-heading.transition-all(
             v-if="canNativeShare"
             type="button"
             class="active:scale-[0.99] hover:border-site-secondary"
             @click="nativeShare"
-          ) {{ t('social.shareNative') }}
+          ) {{ ui('shareNative') }}
 
 main.flex.min-h-dvh.flex-col.items-center.justify-center.gap-3.bg-site-background.text-site-text.px-6.text-center(
   v-else-if="notFound"

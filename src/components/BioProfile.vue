@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue'
 import i18next from 'i18next'
 
-import type { IBio, IBioLink, TLocale } from '@/content/bio'
+import type { IBio, IBioLink } from '@/content/bio'
 import { copyrightLine, licenseUrl } from '@/content/site'
 import { track } from '@/composables/use-analytics'
 import { useDemoLinkNotice } from '@/composables/use-demo-link-notice'
@@ -12,11 +12,12 @@ import { bioThemeStyle } from '@/lib/bio-theme'
 import { IS_DEMO_INSTANCE } from '@/lib/demo'
 import { letterGlyphDataUri } from '@/lib/letter-glyph'
 import { ICONS } from '@/generated/icons'
+import { uiString } from '@/i18n'
 
 const props = withDefaults(
   defineProps<{
     bio: IBio
-    locale?: TLocale
+    locale?: string
     avatarOverride?: string | null
     interactive?: boolean
   }>(),
@@ -113,7 +114,7 @@ const quickSocials = computed(() =>
 
 const siteCardLabel = computed(() => i18next.t('social.siteCard', { lng: props.locale }))
 const licenseAriaLabel = computed(() =>
-  i18next.t('footer.licenseAriaLabel', { lng: props.locale }),
+  uiString('licenseAria', props.locale),
 )
 
 const interactiveClass = (classes: string) =>
@@ -174,7 +175,7 @@ const onClick = (event: MouseEvent, link: { id: string; href: string }) => {
             sizes="(min-width: 1024px) 240px, 208px"
             width="240"
             height="240"
-            :alt="`${bio.name} — avatar`"
+            :alt="uiString('avatarAlt', locale, { name: bio.name })"
             :style="{ borderRadius: 'var(--bio-avatar-radius)', border: 'var(--bio-avatar-border)' }"
             class="@min-[62.5rem]:size-60"
             fetchpriority="high"
@@ -193,8 +194,8 @@ const onClick = (event: MouseEvent, link: { id: string; href: string }) => {
           p.font-mono.font-semibold.uppercase.text-site-secondary(class="text-[11px] tracking-[0.22em]") {{ content.eyebrow }}
         p.text-sm.leading-relaxed.text-pretty.text-site-muted(class="max-w-[19rem]") {{ content.tagline }}
 
-      nav(v-if="quickSocials.length" aria-label="Social profiles")
-        h2.sr-only Social profiles
+      nav(v-if="quickSocials.length" :aria-label="uiString('socialProfiles', locale)")
+        h2.sr-only {{ uiString('socialProfiles', locale) }}
         ul.social-rise.m-0.flex.list-none.flex-wrap.items-center.justify-center.gap-2.p-0(
           class="[animation-delay:0.08s]"
         )
@@ -214,10 +215,10 @@ const onClick = (event: MouseEvent, link: { id: string; href: string }) => {
               )
 
     nav.social-rise.flex.w-full.flex-col.gap-3(
-      aria-label="Profile links"
+      :aria-label="uiString('profileLinks', locale)"
       class="[animation-delay:0.16s]"
     )
-      h2.sr-only Links and contact details
+      h2.sr-only {{ uiString('linksContact', locale) }}
       template(v-for="block in linkBlocks" :key="block")
         a.group.block.w-full.overflow-hidden.border.border-site-border.no-underline.transition-all(
           v-if="block === 'site' && bio.siteCard"
@@ -246,7 +247,8 @@ const onClick = (event: MouseEvent, link: { id: string; href: string }) => {
               span.text-xs.text-site-muted {{ siteCardLabel }}
             span.text-base.opacity-40.transition-transform(
               aria-hidden="true"
-              :class="{ 'group-hover:translate-x-0.5': interactive }"
+              :class="{ 'group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5': interactive }"
+              class="rtl:-scale-x-100"
             ) →
 
         template(v-else-if="block === 'links'")
@@ -269,7 +271,8 @@ const onClick = (event: MouseEvent, link: { id: string; href: string }) => {
             span.flex-1.text-center.text-sm.font-medium {{ label(link) }}
             span.text-base.opacity-40.transition-transform(
               aria-hidden="true"
-              :class="{ 'group-hover:translate-x-0.5': interactive }"
+              :class="{ 'group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5': interactive }"
+              class="rtl:-scale-x-100"
             ) →
 
         template(v-else-if="block === 'socials'")
@@ -292,7 +295,8 @@ const onClick = (event: MouseEvent, link: { id: string; href: string }) => {
             span.flex-1.text-center.text-sm.font-medium {{ label(s) }}
             span.text-base.opacity-40.transition-transform(
               aria-hidden="true"
-              :class="{ 'group-hover:translate-x-0.5': interactive }"
+              :class="{ 'group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5': interactive }"
+              class="rtl:-scale-x-100"
             ) →
 
   footer.social-rise.pt-6.pb-8.font-mono.text-site-muted(

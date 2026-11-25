@@ -21,6 +21,7 @@ const pageTitle = computed(() =>
 onMounted(() => {
   locale.value = detectLegalLocale()
   document.documentElement.lang = locale.value
+  document.documentElement.dir = 'ltr'
 })
 
 useHead({

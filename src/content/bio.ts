@@ -4,7 +4,7 @@ export type TFont = 'geist-sans' | 'inter' | 'geist-mono' | 'fraunces' | 'space-
 
 export interface IBioLink {
   id: string
-  label: Record<TLocale, string>
+  label: Record<TLocale, string> & Partial<Record<string, string>>
   href: string
   icon?: string
   iconSize?: string
@@ -63,7 +63,8 @@ export interface IBio {
   siteCard?: IBioSiteCard
   layout?: IBioLayout
   theme: IBioTheme
-  content: Record<TLocale, IBioContent>
+  /** `en`/`it` always present; any other key is a translation picked from the browser language. */
+  content: Record<TLocale, IBioContent> & Partial<Record<string, IBioContent>>
   links: IBioLink[]
   socials: IBioLink[]
 }

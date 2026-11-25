@@ -5,6 +5,10 @@ import * as CookieConsent from 'vanilla-cookieconsent'
 import { LEGAL_LOCALES, legalContent } from '@/content/legal'
 import type { LegalLocale } from '@/content/legal'
 import { withBase } from '@/lib/base'
+import { detectLocale } from '@/i18n'
+import { RTL_LOCALES } from '@/i18n/locales'
+import { UI_STRINGS } from '@/i18n/translations'
+import type { IBannerStrings } from '@/i18n/translations'
 
 import { setAnalyticsConsent } from './use-analytics'
 
@@ -62,9 +66,8 @@ function syncConsent(): void {
 }
 
 /** Costruisce le traduzioni cookieconsent dai contenuti legali (5 lingue). */
-function buildTranslation(locale: LegalLocale) {
-  const c = legalContent[locale]
-  const b = c.banner
+function buildTranslation(b: Omit<IBannerStrings, 'cookiePolicyLabel' | 'privacyPolicyLabel'>, cookiePolicyLabel: string, privacyPolicyLabel: string) {
+  const c = { cookiePolicyLabel, privacyPolicyLabel }
   return {
     consentModal: {
       title: b.title,
@@ -99,7 +102,19 @@ export function initConsent(): void {
 
   setConsentDefaults()
 
-  const translations = Object.fromEntries(LEGAL_LOCALES.map((l) => [l, buildTranslation(l)]))
+  // Banner texts: the hand-written legal copy (en/it/ja/ru/uk) plus one bundle per other locale.
+  const translations: Record<string, ReturnType<typeof buildTranslation>> = {}
+  for (const [id, ui] of Object.entries(UI_STRINGS)) {
+    if (ui.banner) {
+      translations[id] = buildTranslation(ui.banner, ui.banner.cookiePolicyLabel, ui.banner.privacyPolicyLabel)
+    }
+  }
+  for (const l of LEGAL_LOCALES) {
+    const c = legalContent[l]
+    translations[l] = buildTranslation(c.banner, c.cookiePolicyLabel, c.privacyPolicyLabel)
+  }
+  const detected = detectLocale()
+  const language = detected in translations ? detected : 'en'
 
   void CookieConsent.run({
     guiOptions: {
@@ -126,9 +141,9 @@ export function initConsent(): void {
       },
     },
     language: {
-      default: 'en',
-      autoDetect: 'browser',
+      default: language,
       translations,
+      rtl: RTL_LOCALES.filter((id) => id in translations),
     },
   })
 }
