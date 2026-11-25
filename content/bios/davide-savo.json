@@ -2,7 +2,9 @@
   "slug": "davide-savo",
   "name": "Davide Savo",
   "avatar": "/media/davide-savo.webp",
-  "layout": { "columns": 2 },
+  "layout": {
+    "columns": 2
+  },
   "theme": {
     "primary": "#14151B",
     "secondary": "#2F4BE0",
@@ -26,7 +28,10 @@
   "links": [
     {
       "id": "linkedin",
-      "label": { "en": "LinkedIn", "it": "LinkedIn" },
+      "label": {
+        "en": "LinkedIn",
+        "it": "LinkedIn"
+      },
       "href": "https://www.linkedin.com/in/david-one",
       "icon": "mdi:linkedin",
       "primary": true,
@@ -34,28 +39,14 @@
     },
     {
       "id": "github",
-      "label": { "en": "GitHub", "it": "GitHub" },
+      "label": {
+        "en": "GitHub",
+        "it": "GitHub"
+      },
       "href": "https://github.com/UPirata",
       "icon": "mdi:github",
       "external": true
     }
   ],
-  "socials": [
-    {
-      "id": "linkedin",
-      "label": { "en": "LinkedIn", "it": "LinkedIn" },
-      "href": "https://www.linkedin.com/in/david-one",
-      "icon": "mdi:linkedin",
-      "color": "#0A66C2",
-      "external": true
-    },
-    {
-      "id": "github",
-      "label": { "en": "GitHub", "it": "GitHub" },
-      "href": "https://github.com/UPirata",
-      "icon": "mdi:github",
-      "color": "#181717",
-      "external": true
-    }
-  ]
+  "socials": []
 }
