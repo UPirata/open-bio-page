@@ -3,12 +3,13 @@ import type { RouteRecordRaw } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import BioView from '@/views/BioView.vue'
 import LegalView from '@/views/LegalView.vue'
+import { DEFAULT_SLUG, isSingleProfile } from '@/composables/use-bios'
 
 const AdminView = () => import('@/views/AdminView.vue')
 const ExportView = () => import('@/views/ExportView.vue')
 
 export const routes: RouteRecordRaw[] = [
-  { path: '/', name: 'home', component: HomeView },
+  { path: '/', name: 'home', component: isSingleProfile ? BioView : HomeView },
   // Prerendered pages are also reachable at their .html file URLs; send those to the clean routes.
   { path: '/index.html', redirect: (to) => ({ path: '/', query: to.query, hash: to.hash }) },
   {
@@ -30,5 +31,14 @@ export const routes: RouteRecordRaw[] = [
   },
   // "/:slug/export" must precede the "/:slug" catch-all, otherwise it resolves as a bio slug.
   { path: '/:slug/export', name: 'bio-export', component: ExportView },
-  { path: '/:slug', name: 'bio', component: BioView },
+  {
+    path: '/:slug',
+    name: 'bio',
+    component: BioView,
+    beforeEnter: (to) => {
+      if (isSingleProfile && to.params.slug === DEFAULT_SLUG) {
+        return { path: '/', query: to.query, hash: to.hash }
+      }
+    },
+  },
 ]

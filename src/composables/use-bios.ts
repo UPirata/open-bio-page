@@ -8,7 +8,9 @@ export const bios: Record<string, IBio> = Object.fromEntries(
 
 export const bioSlugs: string[] = Object.keys(bios)
 
-export const DEFAULT_SLUG = 'massimo'
+/** When the site has exactly one profile, that profile is the home page. */
+export const isSingleProfile = bioSlugs.length === 1
+export const DEFAULT_SLUG = isSingleProfile ? bioSlugs[0]! : 'massimo'
 
 export function getBio(slug: string | undefined): IBio | undefined {
   return slug ? bios[slug] : undefined

@@ -1,3 +1,5 @@
+import { DEFAULT_SLUG, isSingleProfile } from '@/composables/use-bios'
+
 /**
  * White-label site configuration.
  *
@@ -61,6 +63,9 @@ export function copyrightLine(year = new Date().getFullYear()): string {
 }
 
 export function publicBioUrl(slug: string): string {
+  if (isSingleProfile && slug === DEFAULT_SLUG) {
+    return `${siteOrigin}/`
+  }
   return `${siteOrigin}/${slug}`
 }
 

@@ -4,7 +4,7 @@ import { useFavicon } from '@vueuse/core'
 import { useHead, useSeoMeta } from '@unhead/vue'
 
 import BioProfile from '@/components/BioProfile.vue'
-import { site, siteOrigin } from '@/content/site'
+import { publicBioUrl, site, siteOrigin } from '@/content/site'
 import { useCurrentBio } from '@/composables/use-current-bio'
 import { track } from '@/composables/use-analytics'
 import { withBase } from '@/lib/base'
@@ -23,7 +23,7 @@ const content = computed(() => bio.value?.content[locale.value])
 const iconUrl = (icon: string | undefined) =>
   icon ? (ICONS[icon] ?? `https://api.iconify.design/${icon}.svg`) : ''
 
-const canonical = computed(() => `${siteOrigin}/${bio.value?.slug ?? ''}`)
+const canonical = computed(() => (bio.value ? publicBioUrl(bio.value.slug) : `${siteOrigin}/`))
 const shareUrl = computed(() => canonical.value)
 const ogImage = computed(() => `${siteOrigin}/og/${bio.value?.slug ?? 'home'}.png`)
 

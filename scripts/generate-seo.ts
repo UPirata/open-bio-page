@@ -22,7 +22,11 @@ const bios = readdirSync(BIOS_DIR)
   .sort((a, b) => a.slug.localeCompare(b.slug))
 
 const today = new Date().toISOString().slice(0, 10)
-const urls = ['', ...bios.map((b) => b.slug)].map((slug) => `${ORIGIN}/${slug}`)
+const singleProfile = bios.length === 1
+const profilePath = (slug: string) => (singleProfile ? '' : slug)
+const urls = singleProfile
+  ? [`${ORIGIN}/`]
+  : ['', ...bios.map((b) => b.slug)].map((slug) => `${ORIGIN}/${slug}`)
 
 const sitemap =
   `<?xml version="1.0" encoding="UTF-8"?>\n` +
@@ -35,14 +39,14 @@ writeFileSync(join(DIST, 'sitemap.xml'), sitemap)
 const indexLines = [
   `# ${site.seo.llmsTitle}`,
   '',
-  `> ${site.seo.llmsBlurb} Canonical URLs are ${ORIGIN}/<slug>.`,
+  `> ${site.seo.llmsBlurb} Canonical URLs are ${singleProfile ? `${ORIGIN}/` : `${ORIGIN}/<slug>`}.`,
   '',
   '## People',
   ...bios.map((b) => {
     const role = b.content.en.eyebrow
     const tagline = b.content.en.tagline
     const summary = [role, tagline].filter(Boolean).join(' — ')
-    return `- [${b.name}](${ORIGIN}/${b.slug})${summary ? `: ${summary}` : ''}`
+    return `- [${b.name}](${ORIGIN}/${profilePath(b.slug)})${summary ? `: ${summary}` : ''}`
   }),
   '',
   '## Resources',
@@ -53,7 +57,7 @@ const indexLines = [
 writeFileSync(join(DIST, 'llms.txt'), indexLines.join('\n'))
 
 const fullSections = bios.map((b) => {
-  const lines = [`## ${b.name}`, `URL: ${ORIGIN}/${b.slug}`]
+  const lines = [`## ${b.name}`, `URL: ${ORIGIN}/${profilePath(b.slug)}`]
   if (b.content.en.eyebrow) {
     lines.push(`Role: ${b.content.en.eyebrow}`)
   }
